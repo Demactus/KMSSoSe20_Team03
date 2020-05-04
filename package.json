@@ -11,5 +11,8 @@
     "url": "git@git.thm.de:awgn63/kmssose20_team03.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.4.1"
+  }
 }
