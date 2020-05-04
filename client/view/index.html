@@ -5,9 +5,19 @@
     <title>ToDo List</title>
     <script>var exports = {"__esModule": true};</script>
     <script src="../client.js"></script>
+    <link rel="stylesheet" href="Style.css">
 </head>
 <body>
- <h1 class="">ToDo List </h1>
-<h2>Work in Progress!</h2>
+<div class="container">
+ <h1 class="app-title">ToDo List </h1>
+<div class="empty-state">
+    <svg class="checklist-icon"><use href="#checklist-icon"></use></svg>
+    <h2 class="empty-state__title">Add your first todo</h2>
+    <p class="empty-state__description">What do you want to get done today?</p>
+</div>
+<form class="todo-form">
+    <input autofocus type="text" aria-label="Enter a new todo item" placeholder="E.g. Go shopping" class="ts-todo-input">
+</form>
+</div>
 </body>
 </html>
