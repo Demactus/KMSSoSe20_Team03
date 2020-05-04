@@ -1,0 +1,15 @@
+{
+  "name": "kmssose20_team03",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.thm.de:awgn63/kmssose20_team03.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
