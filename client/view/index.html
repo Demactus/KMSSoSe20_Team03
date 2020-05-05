@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>ToDo List</title>
-    <script>var exports = {"__esModule": true};</script>
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <!--Bootstrap import-->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
     <script src="../client.js"></script>
     <link rel="stylesheet" href="Style.css">
 </head>
@@ -20,8 +23,14 @@
     <p class="empty-state__description">What do you want to get done today?</p>
 </div>
 <form class="todo-form">
-    <input autofocus type="text" aria-label="Enter a new todo item" placeholder="E.g. Go shopping" class="ts-todo-input">
+    <label>Task<input autofocus type="text" aria-label="Enter a new todo item" placeholder="E.g. Go shopping" class="ts-todo-input" id="task"></label>
+    <labal>Category<input autofocus type="text" aria-label="Enter a new category item" placeholder="E.g. Work" class="ts-todo-input" id="category"></labal>
+    
+
+    
 </form>
+<button class="btn btn-primary">submit</button>
 </div>
+
 </body>
 </html>
