@@ -1,3 +1,9 @@
+/*********************************************************************************************************************
+ * 
+ *********************************************************************************************************************/
+let taskList : Task[] = [];
+let categoryList : Category[] = [];
+
 /**********************************************************************************************************************
  * SECTION TASK
  * FUNCTIONS GO HERE
@@ -19,11 +25,6 @@ class Task {
     }
 }
 
-//import { Task } from "./modell/task";
-
-let taskList : Task[] = [];
-let categoryList : Category[] = [];
-
 function calcCurrentTaskId() {
     let id: number;
     if (taskList.length <= 0) {
@@ -33,6 +34,7 @@ function calcCurrentTaskId() {
     }
    return id++
 }
+
 function calcCurrentCatId() {
     let id: number;
     if (categoryList.length <= 0) {
@@ -44,24 +46,22 @@ function calcCurrentCatId() {
 }
 
 function createTask( name: string, description: string) {
+    if(name == "" && description == ""){
+        console.log("Tasks without Name or Description are not allowed.");
+    }else{
     taskList.push(new Task(calcCurrentTaskId(), name, description))
+    }
 }
-console.log("leere liste: " + taskList);
-
-createTask("test","ich bin ein test");
-createTask("test1","ich bin ein test1");
-createTask("test2","ich bin ein test2");
-createTask("test3","ich bin ein test3");
 
 /**
  * Print all Tasks
  */
-for ( let item of taskList){
-    console.log("keine leere liste: " + item.id + ", " + item.name + ", " + item.description);
+
+function printTask(){
+    for ( let item of taskList){
+        console.log("task# " + item.id + ", " + item.name + ", " + item.description);
+    }
 }
-
-
-
 
 /**********************************************************************************************************************
  * SECTION CATEGORY
@@ -80,30 +80,41 @@ class Category {
     }
 }
 
-function createCategory(name: string, color: string){
-    categoryList.push(new Category(calcCurrentCatId(), name, color))
+function createCategory(name: string, color?: string){
+    if(name == ""){
+        console.log("Category without Name are not allowed.");
+    }else{
+        categoryList.push(new Category(calcCurrentCatId(), name, color));
+    }
+    
 }
 
-console.log("leere liste: " + categoryList);
-
-createCategory("testA","ich bin ein test");
-createCategory("testB","ich bin ein test1");
-createCategory("testC","ich bin ein test2");
-createCategory("testD","ich bin ein test3");
-
-/**
- * Print all Categories
- */
-for ( let item of categoryList){
-    console.log("keine leere liste: " + item.id + ", " + item.name + ", " + item.color);
+function printCategory(){
+    for ( let item of categoryList){
+        console.log("Category#" + item.id + ", " + item.name + ", " + item.color);
+    }
 }
-
 
 /**********************************************************************************************************************
  * JQUERY MAIN EVENT LISTENER
  *********************************************************************************************************************/
 $(function(){
-    console.log("JQuery working...")
-    // jQuery methods go here....
-  
+    console.log("JQuery working...");
+    //ADD TASK    
+    $("#addTaskBtn").on("click", () => {
+        let taskName: string = $("#task").val().toString().trim();
+        let taskDescription: string = $("#description").val().toString().trim();
+        console.log(taskName);
+        createTask(taskName, taskDescription);
+        printTask();
+        event.preventDefault();
+    });
+    //ADD CATEGORY
+    $("#addCategoryBtn").on("click", () => {
+        let categoryName: string = $("#category").val().toString().trim();
+      
+        createCategory(categoryName, "none");
+        printCategory();
+        event.preventDefault();
+    });
   });
