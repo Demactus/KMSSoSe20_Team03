@@ -1,8 +1,9 @@
 /*********************************************************************************************************************
- * 
+ *
  *********************************************************************************************************************/
-let taskList : Task[] = [];
-let categoryList : Category[] = [];
+let taskList: Task[] = [];
+let categoryList: Category[] = [];
+let itemList: JQuery = $("#item-list");
 
 /**********************************************************************************************************************
  * SECTION TASK
@@ -10,18 +11,20 @@ let categoryList : Category[] = [];
  *********************************************************************************************************************/
 
 class Task {
-     id : number;
-     name: string;
-     date : Date;
-     description : string;
-     category: Category;
+    id: number;
+    name: string;
+    date: Date;
+    description: string;
+    category: Category;
+    status: boolean;
 
     constructor(id: number, name: string, description: string, category?: Category) {
-        this.id= id;
+        this.id = id;
         this.name = name;
         this.date = new Date();
         this.description = description;
         this.category = category;
+        this.status = false;
     }
 }
 
@@ -29,28 +32,28 @@ function calcCurrentTaskId() {
     let id: number;
     if (taskList.length <= 0) {
         id = 0;
-    }else {
+    } else {
         id = taskList.length;
     }
-   return id++
+    return id++
 }
 
 function calcCurrentCatId() {
     let id: number;
     if (categoryList.length <= 0) {
         id = 0;
-    }else {
+    } else {
         id = categoryList.length;
     }
-   return id++
+    return id++
 }
 
-function createTask( name: string, description: string) {
-    if(name == "" && description == ""){
+function createTask(name: string, description: string) {
+    if (name == "" && description == "") {
         console.log("Tasks without Name or Description are not allowed.");
-    }else{
-    taskList.push(new Task(calcCurrentTaskId(), name, description));
-    renderList();
+    } else {
+        taskList.push(new Task(calcCurrentTaskId(), name, description));
+        renderList();
     }
 }
 
@@ -58,8 +61,8 @@ function createTask( name: string, description: string) {
  * Print all Tasks
  */
 
-function printTask(){
-    for ( let item of taskList){
+function printTask() {
+    for (let item of taskList) {
         console.log("task# " + item.id + ", " + item.name + ", " + item.description);
     }
 }
@@ -70,52 +73,79 @@ function printTask(){
  *********************************************************************************************************************/
 
 class Category {
-    id : number;
+    id: number;
     name: string;
     color: string;
 
-    constructor(id: number, name: string, color?: string){
+    constructor(id: number, name: string, color?: string) {
         this.id = id;
         this.name = name;
         this.color = color;
     }
 }
 
-function createCategory(name: string, color?: string){
-    if(name == ""){
+function createCategory(name: string, color?: string) {
+    if (name == "") {
         console.log("Category without Name are not allowed.");
-    }else{
+    } else {
         categoryList.push(new Category(calcCurrentCatId(), name, color));
     }
-    
+
 }
 
-function printCategory(){
-    for ( let item of categoryList){
+function printCategory() {
+    for (let item of categoryList) {
         console.log("Category#" + item.id + ", " + item.name + ", " + item.color);
     }
 }
 
-function renderList(){
+function renderList() {
     let itemList: JQuery = $("#item-list");
 
     itemList.empty();
 
-    for (let item of taskList){
-        itemList.append(renderTask(item, item.id.toLocaleString()));
+    for (let item of taskList) {
+        itemList.append(renderTask(item, item.id));
     }
 
 }
-function deleteTask(id: string) {
-    console.log("This id:" + id);
-    let element = document.getElementById(id);
-    console.log(element.className);
+
+/**
+ * Function for deleting a task from the view list
+ * @param id
+ */
+function deleteTask(id: Number) {
+    let rmTask: Task;
+    taskList.forEach(function (task) {
+        if (task.id === id) rmTask = task;
+    })
+    const index = taskList.indexOf(rmTask, 0);
+    if(index > -1){
+        taskList.splice(index, 1);
+    }
+    let element = document.getElementById(id.toLocaleString());
     element.parentNode.removeChild(element);
     return false;
 
 }
 
-function renderTask(task: Task, id: string): JQuery{
+/**
+ * Function to set a task done and change view
+ * of the displayed task card
+ * @param id
+ */
+function setTaskDone(id: Number) {
+    taskList.forEach(function (task) {
+        if (task.id === id) task.status = true;
+    })
+    let element = document.getElementById(id.toLocaleString());
+    let card = element.children;
+    card[0].setAttribute("class",   "card task bg-success");
+
+    return false;
+}
+
+function renderTask(task: Task, id: Number): JQuery {
     let div: JQuery = $("<div class='col-6' id=\"" + id + "\">");
     let card: JQuery = $("<div class=\"card task\">");
     let body: JQuery = $("<div class=\"card-body\">");
@@ -124,8 +154,10 @@ function renderTask(task: Task, id: string): JQuery{
     body.append(($("<p class=\"card-text\">" + task.description + "</p>")));
     // edit button
     body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\">Edit</button>"));
+    // check icon
+    body.append($("<button type=\'button\' class='btn btn-secondary' onclick='setTaskDone(" + id + ")'> <i class=\"fa fa-check\"></i> </button>"));
     // close button
-    body.append($("<button type=\"button\" class=\"close\" aria-label=\"close\" onclick='deleteTask("+ id +")'> <span aria-hidden=\"true\">&times;</span> </button>"));
+    body.append($("<button type=\'button\' class=\'close\' aria-label=\"close\" onclick='deleteTask(" + id.toLocaleString() + ")'> <span aria-hidden=\'true\'>&times;</span> </button>"));
 
     card.append(body);
     div.append(card);
@@ -136,7 +168,7 @@ function renderTask(task: Task, id: string): JQuery{
 /**********************************************************************************************************************
  * JQUERY MAIN EVENT LISTENER
  *********************************************************************************************************************/
-$(function(){
+$(function () {
     console.log("JQuery working...");
     //ADD TASK    
     $("#addTaskBtn").on("click", () => {
@@ -150,9 +182,9 @@ $(function(){
     //ADD CATEGORY
     $("#addCategoryBtn").on("click", () => {
         let categoryName: string = $("#category").val().toString().trim();
-      
+
         createCategory(categoryName, "none");
         printCategory();
         event.preventDefault();
     });
-  });
+});
