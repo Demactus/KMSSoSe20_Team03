@@ -97,7 +97,14 @@ function printCategory(){
 }
 
 function renderList(){
-    $("#item-list").append(renderTask(taskList[taskList.length-1]));
+    let itemList: JQuery = $("#item-list");
+
+    itemList.empty();
+
+    for (let item of taskList){
+        itemList.append(renderTask(item));
+    }
+
 }
 
 function renderTask(task: Task): JQuery{
