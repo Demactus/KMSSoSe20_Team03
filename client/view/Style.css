@@ -15,7 +15,7 @@ body {
     line-height: 1.4;
 }
 
-.container {
+/*.container {
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
@@ -26,7 +26,7 @@ body {
     margin-top: 5vh;
     margin-bottom: 5vh;
     overflow-y: auto;
-}
+}*/
 
 .app-title {
     text-align: center;
@@ -104,4 +104,16 @@ input[type="text"] {
 
 .empty-state__title, .empty-state__description {
     margin-bottom: 20px;
+}
+
+.task {
+    margin-top: 50px;
+}
+
+#addCategoryBtn {
+    margin-top: 20px;
+}
+
+#addTaskBtn {
+    margin-top: 20px;
 }

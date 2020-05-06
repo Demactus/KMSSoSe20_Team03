@@ -49,7 +49,8 @@ function createTask( name: string, description: string) {
     if(name == "" && description == ""){
         console.log("Tasks without Name or Description are not allowed.");
     }else{
-    taskList.push(new Task(calcCurrentTaskId(), name, description))
+    taskList.push(new Task(calcCurrentTaskId(), name, description));
+    renderList();
     }
 }
 
@@ -93,6 +94,25 @@ function printCategory(){
     for ( let item of categoryList){
         console.log("Category#" + item.id + ", " + item.name + ", " + item.color);
     }
+}
+
+function renderList(){
+    $("#item-list").append(renderTask(taskList[taskList.length-1]));
+}
+
+function renderTask(task: Task): JQuery{
+    let div: JQuery = $("<div class='col-6'>");
+    let card: JQuery = $("<div class=\"card task\">");
+    let body: JQuery = $("<div class=\"card-body\">");
+
+    body.append($("<h5 class=\"card-title\">" + task.name + "</h5>"));
+    body.append(($("<p class=\"card-text\">" + task.description + "</p>")));
+    body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\">Edit</button>"));
+
+    card.append(body);
+    div.append(card);
+
+    return div;
 }
 
 /**********************************************************************************************************************

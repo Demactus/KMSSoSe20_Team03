@@ -22,20 +22,23 @@
     <h2 class="empty-state__title">Add your first todo</h2>
     <p class="empty-state__description">What do you want to get done today?</p>
 </div>
-<form class="todo-form">
-    <div>
-        <label>Task</label><input autofocus type="text" aria-label="Enter a new todo item" placeholder="E.g. Go shopping" class="ts-todo-input" id="task">
-        <label>Description</label><input autofocus type="text" aria-label="Enter a new todo item" placeholder="E.g. Some Text" class="ts-todo-input" id="description">
-        <button class="btn btn-primary" id="addTaskBtn">submit Task</button> 
-    </div>
-    
-    <div>
-        <label>Category</label><input autofocus type="text" aria-label="Enter a new category item" placeholder="E.g. Work" class="ts-todo-input" id="category">
-        
-        <button class="btn btn-primary" id="addCategoryBtn">submit Category</button> 
-    </div>
-    
-</form>
+<div class = "row">
+        <div class="col-6">
+            <label>Task</label><input autofocus type="text" aria-label="Enter a new todo item" placeholder="E.g. Go shopping" class="ts-todo-input" id="task">
+            <label>Description</label><input autofocus type="text" aria-label="Enter a new todo item" placeholder="E.g. Some Text" class="ts-todo-input" id="description">
+            <button class="btn btn-primary" id="addTaskBtn">submit Task</button>
+        </div>
+
+        <div class="col-6">
+            <label>Category</label><input autofocus type="text" aria-label="Enter a new category item" placeholder="E.g. Work" class="ts-todo-input" id="category">
+
+            <button class="btn btn-primary" id="addCategoryBtn">submit Category</button>
+        </div>
+</div>
+
+<div id="item-list" class="row">
+
+</div>
 </div>
 
 </body>
