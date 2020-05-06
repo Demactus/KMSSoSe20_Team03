@@ -102,13 +102,21 @@ function renderList(){
     itemList.empty();
 
     for (let item of taskList){
-        itemList.append(renderTask(item));
+        itemList.append(renderTask(item, item.id.toLocaleString()));
     }
 
 }
+function deleteTask(id: string) {
+    console.log("This id:" + id);
+    let element = document.getElementById(id);
+    console.log(element.className);
+    element.parentNode.removeChild(element);
+    return false;
 
-function renderTask(task: Task): JQuery{
-    let div: JQuery = $("<div class='col-6'>");
+}
+
+function renderTask(task: Task, id: string): JQuery{
+    let div: JQuery = $("<div class='col-6' id=\"" + id + "\">");
     let card: JQuery = $("<div class=\"card task\">");
     let body: JQuery = $("<div class=\"card-body\">");
 
@@ -117,7 +125,7 @@ function renderTask(task: Task): JQuery{
     // edit button
     body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\">Edit</button>"));
     // close button
-    body.append($("<button type=\"button\" class=\"close\" aria-label=\"close\"> <span aria-hidden=\"true\">&times;</span> </button>"));
+    body.append($("<button type=\"button\" class=\"close\" aria-label=\"close\" onclick='deleteTask("+ id +")'> <span aria-hidden=\"true\">&times;</span> </button>"));
 
     card.append(body);
     div.append(card);
