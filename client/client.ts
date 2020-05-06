@@ -3,6 +3,7 @@
  *********************************************************************************************************************/
 let taskList : Task[] = [];
 let categoryList : Category[] = [];
+enum priorityEnum {low, middle, high}
 
 /**********************************************************************************************************************
  * SECTION TASK
@@ -15,6 +16,7 @@ class Task {
      date : Date;
      description : string;
      category: Category;
+     priority : priorityEnum;
 
     constructor(id: number, name: string, description: string, category?: Category) {
         this.id= id;
@@ -22,6 +24,7 @@ class Task {
         this.date = new Date();
         this.description = description;
         this.category = category;
+        this.priority = 1;      //middle priority
     }
 }
 
@@ -35,22 +38,24 @@ function calcCurrentTaskId() {
    return id++
 }
 
-function calcCurrentCatId() {
-    let id: number;
-    if (categoryList.length <= 0) {
-        id = 0;
-    }else {
-        id = categoryList.length;
-    }
-   return id++
-}
-
 function createTask( name: string, description: string) {
     if(name == "" && description == ""){
         console.log("Tasks without Name or Description are not allowed.");
     }else{
     taskList.push(new Task(calcCurrentTaskId(), name, description));
     renderList();
+    }
+}
+
+/**
+ * TODO: We should be able to change the priority of a specific task (by ID or something)
+ * @param prio
+ */
+function setPriority(prio : number){
+    if(prio > 2 || prio < 0){
+        console.log("There's no such priority");
+    }else{
+        this.priority = prio;
     }
 }
 
@@ -79,6 +84,16 @@ class Category {
         this.name = name;
         this.color = color;
     }
+}
+
+function calcCurrentCatId() {
+    let id: number;
+    if (categoryList.length <= 0) {
+        id = 0;
+    }else {
+        id = categoryList.length;
+    }
+    return id++
 }
 
 function createCategory(name: string, color?: string){
