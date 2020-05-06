@@ -114,7 +114,10 @@ function renderTask(task: Task): JQuery{
 
     body.append($("<h5 class=\"card-title\">" + task.name + "</h5>"));
     body.append(($("<p class=\"card-text\">" + task.description + "</p>")));
+    // edit button
     body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\">Edit</button>"));
+    // close button
+    body.append($("<button type=\"button\" class=\"close\" aria-label=\"close\"> <span aria-hidden=\"true\">&times;</span> </button>"));
 
     card.append(body);
     div.append(card);
