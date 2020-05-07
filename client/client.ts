@@ -135,15 +135,15 @@ function renderCatList() {
     }
 
 }
+let selectedCategory: number = 0;
 
 function editCategory(id: number){
     
     for( let item of categoryList){
         if( item.id == id){
+            selectedCategory = item.id;
             $("#categoryIdModal").text(item.id);
             $("#editModalCategoryInput").val(item.name);
-        }else {
-            console.log("nothing happend!"); 
         }
     }
 }
@@ -153,8 +153,6 @@ function saveCategory(id: number){
         if( item.id == id){
             item.name = $("#editModalCategoryInput").val().toString().trim();
             renderCatList();
-        }else {
-            console.log("nothing happend!"); 
         }
     }
 }
@@ -260,10 +258,10 @@ $(function () {
 
     $("#editModalCategory").on("shown.bs.modal", function(){
         $("#saveButtonCategory").on("click", function(){
-            let id = $("#categoryModalId").text().toString().trim();
-           saveCategory(+id); // parse to Number
+            
+            console.log(selectedCategory);
+           saveCategory(selectedCategory); // parse to Number
         })
-        
         
     });
 });
