@@ -109,7 +109,9 @@ input[type="text"] {
 .task {
     margin-top: 50px;
 }
-
+.btn-secondary{
+    background-color: #32cd32;
+}
 #addCategoryBtn {
     margin-top: 20px;
 }
