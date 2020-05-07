@@ -136,6 +136,29 @@ function renderCatList() {
 
 }
 
+function editCategory(id: number){
+    
+    for( let item of categoryList){
+        if( item.id == id){
+            $("#categoryIdModal").text(item.id);
+            $("#editModalCategoryInput").val(item.name);
+        }else {
+            console.log("nothing happend!"); 
+        }
+    }
+}
+
+function saveCategory(id: number){
+    for( let item of categoryList){
+        if( item.id == id){
+            item.name = $("#editModalCategoryInput").val().toString().trim();
+            renderCatList();
+        }else {
+            console.log("nothing happend!"); 
+        }
+    }
+}
+
 function renderCategory(category: Category, id: Number): JQuery {
     let div: JQuery = $("<div class='col-6' id=\"" + id + "\">");
     let card: JQuery = $("<div class=\"card task\">");
@@ -144,7 +167,7 @@ function renderCategory(category: Category, id: Number): JQuery {
     body.append($("<h5 class=\"card-title\">" + category.name + "</h5>"));
     body.append(($("<p class=\"card-text\">" + category.color + "</p>")));
     // edit button
-    body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\">Edit</button>"));
+    body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\" onclick='editCategory(" + id + ")' data-toggle='modal' data-target='#editModalCategory'>Edit</button>"));
     // check icon
     body.append($("<button type=\'button\' class='btn btn-secondary' onclick='setTaskDone(" + id + ")'> <i class=\"fa fa-check\"></i> </button>"));
     // close button
@@ -233,5 +256,14 @@ $(function () {
         printCategory();
         renderCatList();
         event.preventDefault();
+    });
+
+    $("#editModalCategory").on("shown.bs.modal", function(){
+        $("#saveButtonCategory").on("click", function(){
+            let id = $("#categoryModalId").text().toString().trim();
+           saveCategory(+id); // parse to Number
+        })
+        
+        
     });
 });
