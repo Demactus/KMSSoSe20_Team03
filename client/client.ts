@@ -42,10 +42,17 @@ function calcCurrentTaskId() {
 }
 
 function createTask(name: string, description: string) {
+    let categorySelect: JQuery = $("#categorySelect");
     if (name == "" && description == "") {
         console.log("Tasks without Name or Description are not allowed.");
     } else {
-        taskList.push(new Task(calcCurrentTaskId(), name, description));
+        if (+categorySelect.val() != -1) {
+            taskList.push(new Task(calcCurrentTaskId(), name, description, categoryList[+categorySelect.val()]));
+            console.log(taskList[taskList.length-1]);
+        } else {
+            taskList.push(new Task(calcCurrentTaskId(), name, description));
+            console.log(taskList[taskList.length-1]);
+        }
         renderList();
     }
 }
@@ -104,6 +111,7 @@ function createCategory(name: string, color?: string) {
         console.log("Category without Name are not allowed.");
     } else {
         categoryList.push(new Category(calcCurrentCatId(), name, color));
+        renderCategoryDropdown();
     }
 
 }
@@ -133,7 +141,7 @@ function deleteTask(id: Number) {
     let rmTask: Task;
     taskList.forEach(function (task) {
         if (task.id === id) rmTask = task;
-    })
+    });
     const index = taskList.indexOf(rmTask, 0);
     if(index > -1){
         taskList.splice(index, 1);
@@ -152,7 +160,7 @@ function deleteTask(id: Number) {
 function setTaskDone(id: Number) {
     taskList.forEach(function (task) {
         if (task.id === id) task.status = true;
-    })
+    });
     let element = document.getElementById(id.toLocaleString());
     let card = element.children;
     card[0].setAttribute("class",   "card task bg-success");
@@ -164,6 +172,14 @@ function renderTask(task: Task, id: Number): JQuery {
     let div: JQuery = $("<div class='col-6' id=\"" + id + "\">");
     let card: JQuery = $("<div class=\"card task\">");
     let body: JQuery = $("<div class=\"card-body\">");
+    let footer: JQuery;
+
+    if (task.category != undefined){
+        footer = $("<div class=\"card-footer\">" + "Category: " + task.category.name + "  </div>");
+    } else {
+        footer = $("<div class=\"card-footer\">" + "No category" + "  </div>");
+
+    }
 
     body.append($("<h5 class=\"card-title\">" + task.name + "</h5>"));
     body.append(($("<p class=\"card-text\">" + task.description + "</p>")));
@@ -175,9 +191,21 @@ function renderTask(task: Task, id: Number): JQuery {
     body.append($("<button type=\'button\' class=\'close\' aria-label=\"close\" onclick='deleteTask(" + id.toLocaleString() + ")'> <span aria-hidden=\'true\'>&times;</span> </button>"));
 
     card.append(body);
+    card.append(footer);
     div.append(card);
 
     return div;
+}
+
+function renderCategoryDropdown(){
+    let categorySelect: JQuery = $("#categorySelect");
+    categorySelect.empty();
+
+    categorySelect.append('<option value="-1">' + "No category" + '</option>');
+
+    for(let cat of categoryList){
+        categorySelect.append('<option value="' + cat.id + '">' + cat.name + '</option>')
+    }
 }
 
 /**********************************************************************************************************************
@@ -202,4 +230,16 @@ $(function () {
         printCategory();
         event.preventDefault();
     });
+});
+
+$(function () {
+    let categorySelect: JQuery = $("#categorySelect");
+
+    if (categoryList.length == 0){
+        categorySelect.append('<option value= "-1">' + "You have no categories saved" + '</option>')
+    } else {
+        for(let cat of categoryList){
+            categorySelect.append('<option value="' + cat.id + '">' + cat.name + '</option>')
+        }
+    }
 });
