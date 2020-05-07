@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>ToDo List</title>
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!--Bootstrap import-->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
@@ -16,31 +17,53 @@
 </head>
 
 <body>
-<div class="container">
- <h1 class="app-title">ToDo List </h1>
-<div class="empty-state">
-    <svg class="checklist-icon"><use href="#checklist-icon"></use></svg>
-    <h2 class="empty-state__title">Add your first todo</h2>
-    <p class="empty-state__description">What do you want to get done today?</p>
-</div>
-<div class = "row">
-        <div class="col-6">
-            <label>Task</label><input autofocus type="text" aria-label="Enter a new todo item" placeholder="E.g. Go shopping" class="ts-todo-input" id="task">
-            <label>Description</label><input autofocus type="text" aria-label="Enter a new todo item" placeholder="E.g. Some Text" class="ts-todo-input" id="description">
-            <button class="btn btn-primary" id="addTaskBtn">submit Task</button>
+    <div class="container">
+        <h1 class="app-title">ToDo List </h1>
+        <div class="empty-state">
+            <svg class="checklist-icon">
+                <use href="#checklist-icon"></use>
+            </svg>
+            <h2 class="empty-state__title">Add your first todo</h2>
+            <p class="empty-state__description">What do you want to get done today?</p>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label>Task</label><input autofocus type="text" aria-label="Enter a new todo item"
+                    placeholder="E.g. Go shopping" class="ts-todo-input" id="task">
+                <label>Description</label><input autofocus type="text" aria-label="Enter a new todo item"
+                    placeholder="E.g. Some Text" class="ts-todo-input" id="description">
+                <button class="btn btn-primary" id="addTaskBtn">submit Task</button>
+            </div>
+
+            <div class="col-6">
+                <label>Category</label><input autofocus type="text" aria-label="Enter a new category item"
+                    placeholder="E.g. Work" class="ts-todo-input" id="category">
+
+                <button class="btn btn-primary" id="addCategoryBtn">submit Category</button>
+            </div>
         </div>
 
-        <div class="col-6">
-            <label>Category</label><input autofocus type="text" aria-label="Enter a new category item" placeholder="E.g. Work" class="ts-todo-input" id="category">
+        <div class="row">
+            <div class="col">
+                <h2 class="card-header">Tasklist</h2>
+                <div id="item-list" class="list-group">
 
-            <button class="btn btn-primary" id="addCategoryBtn">submit Category</button>
+                </div>
+            </div>
+
+            <div class="col">
+                <h2 class="card-header">Categorylist</h2>
+                <div id="category-list" class="list-group">
+
+                </div>
+            </div>
+
         </div>
-</div>
 
-<div id="item-list" class="row">
 
-</div>
-</div>
+
+    </div>
 
 </body>
+
 </html>

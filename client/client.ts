@@ -125,6 +125,37 @@ function renderList() {
 
 }
 
+function renderCatList() {
+    let itemList: JQuery = $("#category-list");
+
+    itemList.empty();
+
+    for (let item of categoryList) {
+        itemList.append(renderCategory(item, item.id));
+    }
+
+}
+
+function renderCategory(category: Category, id: Number): JQuery {
+    let div: JQuery = $("<div class='col-6' id=\"" + id + "\">");
+    let card: JQuery = $("<div class=\"card task\">");
+    let body: JQuery = $("<div class=\"card-body\">");
+
+    body.append($("<h5 class=\"card-title\">" + category.name + "</h5>"));
+    body.append(($("<p class=\"card-text\">" + category.color + "</p>")));
+    // edit button
+    body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\">Edit</button>"));
+    // check icon
+    body.append($("<button type=\'button\' class='btn btn-secondary' onclick='setTaskDone(" + id + ")'> <i class=\"fa fa-check\"></i> </button>"));
+    // close button
+    body.append($("<button type=\'button\' class=\'close\' aria-label=\"close\" onclick='deleteTask(" + id.toLocaleString() + ")'> <span aria-hidden=\'true\'>&times;</span> </button>"));
+
+    card.append(body);
+    div.append(card);
+
+    return div;
+}
+
 /**
  * Function for deleting a task from the view list
  * @param id
@@ -200,6 +231,7 @@ $(function () {
 
         createCategory(categoryName, "none");
         printCategory();
+        renderCatList();
         event.preventDefault();
     });
 });
