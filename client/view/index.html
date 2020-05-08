@@ -57,6 +57,31 @@
 
                 </div>
             </div>
+    <!-- This is the modal window -->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editLable" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editLable">Editing Window</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-6">
+                        <label>Task</label><input autofocus type="text" aria-label="Enter a new todo item"  class="ts-todo-input" id="edittask" value="">
+                        <label>Description</label><input autofocus type="text" aria-label="Enter a new todo item"  class="ts-todo-input" id="editdescription" value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="editsavebtn" type="button" class="btn btn-primary" data-dismiss="modal" >Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
         </div>
 
@@ -84,6 +109,6 @@
 
     </div>
 
-</body>
+ </body>
 
 </html>

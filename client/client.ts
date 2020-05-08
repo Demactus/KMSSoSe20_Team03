@@ -1,10 +1,13 @@
 /*********************************************************************************************************************
  *
  *********************************************************************************************************************/
+import get = Reflect.get;
+
 let taskList : Task[] = [];
 let categoryList : Category[] = [];
 enum priorityEnum {low, middle, high}
 let itemList: JQuery = $("#item-list");
+let tempId : number;
 
 /**********************************************************************************************************************
  * SECTION TASK
@@ -212,15 +215,28 @@ function setTaskDone(id: Number) {
     return false;
 }
 
+/*
+* Function to prepare the modal window with the current task
+* */
+
+function modalcontent(id:number) {
+
+    $('#edittask').val(taskList[id].name);
+    $('#editdescription').val(taskList[id].description)
+
+    tempId=id;
+}
+
+
 function renderTask(task: Task, id: Number): JQuery {
     let div: JQuery = $("<div class='col-6' id=\"" + id + "\">");
     let card: JQuery = $("<div class=\"card task\">");
-    let body: JQuery = $("<div class=\"card-body\">");
+    let body: JQuery = $("<div id="+task.id +" class=\"card-body\">");
 
     body.append($("<h5 class=\"card-title\">" + task.name + "</h5>"));
     body.append(($("<p class=\"card-text\">" + task.description + "</p>")));
     // edit button
-    body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\">Edit</button>"));
+    body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\" onclick='modalcontent("+id+")' data-toggle=\"modal\" data-target=\"#edit\" > Edit</button>"));
     // check icon
     body.append($("<button type=\'button\' class='btn btn-secondary' onclick='setTaskDone(" + id + ")'> <i class=\"fa fa-check\"></i> </button>"));
     // close button
@@ -264,4 +280,17 @@ $(function () {
         })
         
     });
+
+    $('#editsavebtn').on("click", () => {
+
+        taskList[tempId].description = $('#editdescription').val().toString();
+        taskList[tempId].name = $('#edittask').val().toString();
+
+     //   alert(taskList[tempId].description);
+
+        renderList();
+    });
+
+
+
 });
