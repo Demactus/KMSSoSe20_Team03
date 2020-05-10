@@ -19,13 +19,14 @@
 <body>
     <div class="container">
         <h1 class="app-title">ToDo List </h1>
-        <div class="empty-state">
+        <!--<div class="empty-state">
             <svg class="checklist-icon">
                 <use href="#checklist-icon"></use>
             </svg>
             <h2 class="empty-state__title">Add your first todo</h2>
             <p class="empty-state__description">What do you want to get done today?</p>
-        </div>
+        </div>-->
+
         <div class="row">
             <div class="col-6">
                 <label>Task</label><input autofocus type="text" aria-label="Enter a new todo item"
@@ -45,7 +46,7 @@
 
         <div class="row">
             <div class="col">
-                <h2 class="card-header">Tasklist</h2>
+                <h2 class="card-header">Tasklist <button class="btn btn-warning" id="sortBtn">Sort</button></h2>
                 <div id="item-list" class="list-group">
 
                 </div>

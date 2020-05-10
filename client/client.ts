@@ -1,13 +1,11 @@
 /*********************************************************************************************************************
  *
  *********************************************************************************************************************/
-
-
-let taskList : Task[] = [];
-let categoryList : Category[] = [];
+let taskList: Task[] = [];
+let categoryList: Category[] = [];
 enum priorityEnum {low, middle, high}
 let itemList: JQuery = $("#item-list");
-let tempId : number;
+let tempId: number;
 
 /**********************************************************************************************************************
  * SECTION TASK
@@ -15,12 +13,12 @@ let tempId : number;
  *********************************************************************************************************************/
 
 class Task {
-     id : number;
-     name: string;
-     date : Date;
-     description : string;
-     category: Category;
-     priority : priorityEnum;
+    id: number;
+    name: string;
+    date: Date;
+    description: string;
+    category: Category;
+    priority: priorityEnum;
     status: boolean;
 
     constructor(id: number, name: string, description: string, category?: Category) {
@@ -57,10 +55,10 @@ function createTask(name: string, description: string) {
  * TODO: We should be able to change the priority of a specific task (by ID or something)
  * @param prio
  */
-function setPriority(prio : number){
-    if(prio > 2 || prio < 0){
+function setPriority(prio: number) {
+    if (prio > 2 || prio < 0) {
         console.log("There's no such priority");
-    }else{
+    } else {
         this.priority = prio;
     }
 }
@@ -85,7 +83,7 @@ function deleteTask(id: Number) {
         if (task.id === id) rmTask = task;
     })
     const index = taskList.indexOf(rmTask, 0);
-    if(index > -1){
+    if (index > -1) {
         taskList.splice(index, 1);
     }
     let element = document.getElementById(id.toLocaleString());
@@ -105,7 +103,7 @@ function setTaskDone(id: Number) {
     })
     let element = document.getElementById(id.toLocaleString());
     let card = element.children;
-    card[0].setAttribute("class",   "card task bg-success");
+    card[0].setAttribute("class", "card task bg-success");
 
     return false;
 }
@@ -114,12 +112,12 @@ function setTaskDone(id: Number) {
 * Function to prepare the modal window with the current task
 * */
 
-function modalcontent(id:number) {
+function modalcontent(id: number) {
 
     $('#edittask').val(taskList[id].name);
     $('#editdescription').val(taskList[id].description)
 
-    tempId=id;
+    tempId = id;
 }
 
 
@@ -137,12 +135,12 @@ function renderList() {
 function renderTask(task: Task, id: Number): JQuery {
     let div: JQuery = $("<div class='col-6' id=\"" + id + "\">");
     let card: JQuery = $("<div class=\"card task\">");
-    let body: JQuery = $("<div id="+task.id +" class=\"card-body\">");
+    let body: JQuery = $("<div id=" + task.id + " class=\"card-body\">");
 
     body.append($("<h5 class=\"card-title\">" + task.name + "</h5>"));
     body.append(($("<p class=\"card-text\">" + task.description + "</p>")));
     // edit button
-    body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\" onclick='modalcontent("+id+")' data-toggle=\"modal\" data-target=\"#edit\" > Edit</button>"));
+    body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\" onclick='modalcontent(" + id + ")' data-toggle=\"modal\" data-target=\"#edit\" > Edit</button>"));
     // check icon
     body.append($("<button type=\'button\' class='btn btn-secondary' onclick='setTaskDone(" + id + ")'> <i class=\"fa fa-check\"></i> </button>"));
     // close button
@@ -175,7 +173,7 @@ function calcCurrentCatId() {
     let id: number;
     if (categoryList.length <= 0) {
         id = 0;
-    }else {
+    } else {
         id = categoryList.length;
     }
     return id++
@@ -206,12 +204,13 @@ function renderCatList() {
     }
 
 }
+
 let selectedCategory: number = 0;
 
-function editCategory(id: number){
-    
-    for( let item of categoryList){
-        if( item.id == id){
+function editCategory(id: number) {
+
+    for (let item of categoryList) {
+        if (item.id == id) {
             selectedCategory = item.id;
             $("#categoryIdModal").text(item.id);
             $("#editModalCategoryInput").val(item.name);
@@ -219,22 +218,22 @@ function editCategory(id: number){
     }
 }
 
-function saveCategory(id: number){
-    for( let item of categoryList){
-        if( item.id == id){
+function saveCategory(id: number) {
+    for (let item of categoryList) {
+        if (item.id == id) {
             item.name = $("#editModalCategoryInput").val().toString().trim();
             renderCatList();
         }
     }
 }
 
-function deleteCategory(id: number){
+function deleteCategory(id: number) {
     let rmCategory: Category;
     categoryList.forEach(function (category) {
         if (category.id === id) rmCategory = category;
     })
     const index = categoryList.indexOf(rmCategory, 0);
-    if(index > -1){
+    if (index > -1) {
         categoryList.splice(index, 1);
     }
     renderCatList();
@@ -266,7 +265,7 @@ function renderCategory(category: Category, id: Number): JQuery {
  *********************************************************************************************************************/
 $(function () {
     console.log("JQuery working...");
-    //ADD TASK    
+    //ADD TASK
     $("#addTaskBtn").on("click", () => {
         let taskName: string = $("#task").val().toString().trim();
         let taskDescription: string = $("#description").val().toString().trim();
@@ -285,13 +284,13 @@ $(function () {
         event.preventDefault();
     });
 
-    $("#editModalCategory").on("shown.bs.modal", function(){
-        $("#saveButtonCategory").on("click", function(){
-            
+    $("#editModalCategory").on("shown.bs.modal", function () {
+        $("#saveButtonCategory").on("click", function () {
+
             console.log(selectedCategory);
-           saveCategory(selectedCategory); // parse to Number
+            saveCategory(selectedCategory); // parse to Number
         })
-        
+
     });
 
     $('#editsavebtn').on("click", () => {
@@ -299,11 +298,15 @@ $(function () {
         taskList[tempId].description = $('#editdescription').val().toString();
         taskList[tempId].name = $('#edittask').val().toString();
 
-     //   alert(taskList[tempId].description);
+        //   alert(taskList[tempId].description);
 
         renderList();
     });
 
-
+    // SORT CARDS
+    $('#sortBtn').on('click', function () {
+        taskList.sort(((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1));
+        renderList();
+    });
 
 });
