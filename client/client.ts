@@ -169,8 +169,7 @@ function deleteCategory(id: number){
     if(index > -1){
         categoryList.splice(index, 1);
     }
-    let element = document.getElementById(id.toLocaleString());
-    element.parentNode.removeChild(element);
+    renderCatList();
     return false;
 }
 
