@@ -140,9 +140,17 @@ function renderList() {
 }
 
 function renderTask(task: Task, id: Number): JQuery {
-    let div: JQuery = $("<div class='col-6' id=\"" + id + "\">");
+    let div: JQuery = $("<div class='col' id=\"" + id + "\">");
     let card: JQuery = $("<div class=\"card task\">");
     let body: JQuery = $("<div id=" + task.id + " class=\"card-body\">");
+    let footer: JQuery;
+
+    if (task.category != undefined){
+        footer = $("<div class=\"card-footer\">" + "Category: " + task.category.name + "  </div>");
+    } else {
+        footer = $("<div class=\"card-footer\">" + "No category" + "  </div>");
+
+    }
 
     body.append($("<h5 class=\"card-title\">" + task.name + "</h5>"));
     body.append(($("<p class=\"card-text\">" + task.description + "</p>")));
@@ -154,6 +162,7 @@ function renderTask(task: Task, id: Number): JQuery {
     body.append($("<button type=\'button\' class=\'close\' aria-label=\"close\" onclick='deleteTask(" + id.toLocaleString() + ")'> <span aria-hidden=\'true\'>&times;</span> </button>"));
 
     card.append(body);
+    card.append(footer);
     div.append(card);
 
     return div;
@@ -231,6 +240,7 @@ function saveCategory(id: number) {
         if (item.id == id) {
             item.name = $("#editModalCategoryInput").val().toString().trim();
             renderCatList();
+            renderCategoryDropdown();
         }
     }
 }
@@ -245,33 +255,25 @@ function deleteCategory(id: number) {
         categoryList.splice(index, 1);
     }
     renderCatList();
+    renderCategoryDropdown();
     return false;
 }
 
 function renderCategory(category: Category, id: Number): JQuery {
-    let div: JQuery = $("<div class='col-6' id=\"" + id + "\">");
+    let div: JQuery = $("<div class='col' id=\"" + id + "\">");
     let card: JQuery = $("<div class=\"card task\">");
     let body: JQuery = $("<div class=\"card-body\">");
-    let footer: JQuery;
-
-    if (task.category != undefined){
-        footer = $("<div class=\"card-footer\">" + "Category: " + task.category.name + "  </div>");
-    } else {
-        footer = $("<div class=\"card-footer\">" + "No category" + "  </div>");
-
-    }
 
     body.append($("<h5 class=\"card-title\">" + category.name + "</h5>"));
     body.append(($("<p class=\"card-text\">" + category.color + "</p>")));
     // edit button
     body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\" onclick='editCategory(" + id + ")' data-toggle='modal' data-target='#editModalCategory'>Edit</button>"));
     // check icon
-    body.append($("<button type=\'button\' class='btn btn-secondary' onclick='setTaskDone(" + id + ")'> <i class=\"fa fa-check\"></i> </button>"));
+    //body.append($("<button type=\'button\' class='btn btn-secondary' onclick='setTaskDone(" + id + ")'> <i class=\"fa fa-check\"></i> </button>"));
     // close button
     body.append($("<button type=\'button\' class=\'close\' aria-label=\"close\" onclick='deleteCategory(" + id.toLocaleString() + ")'> <span aria-hidden=\'true\'>&times;</span> </button>"));
 
     card.append(body);
-    card.append(footer);
     div.append(card);
 
     return div;
