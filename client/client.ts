@@ -75,6 +75,85 @@ function printTask() {
     }
 }
 
+/**
+ * Function for deleting a task from the view list
+ * @param id
+ */
+function deleteTask(id: Number) {
+    let rmTask: Task;
+    taskList.forEach(function (task) {
+        if (task.id === id) rmTask = task;
+    })
+    const index = taskList.indexOf(rmTask, 0);
+    if(index > -1){
+        taskList.splice(index, 1);
+    }
+    let element = document.getElementById(id.toLocaleString());
+    element.parentNode.removeChild(element);
+    return false;
+
+}
+
+/**
+ * Function to set a task done and change view
+ * of the displayed task card
+ * @param id
+ */
+function setTaskDone(id: Number) {
+    taskList.forEach(function (task) {
+        if (task.id === id) task.status = true;
+    })
+    let element = document.getElementById(id.toLocaleString());
+    let card = element.children;
+    card[0].setAttribute("class",   "card task bg-success");
+
+    return false;
+}
+
+/*
+* Function to prepare the modal window with the current task
+* */
+
+function modalcontent(id:number) {
+
+    $('#edittask').val(taskList[id].name);
+    $('#editdescription').val(taskList[id].description)
+
+    tempId=id;
+}
+
+
+function renderList() {
+    let itemList: JQuery = $("#item-list");
+
+    itemList.empty();
+
+    for (let item of taskList) {
+        itemList.append(renderTask(item, item.id));
+    }
+
+}
+
+function renderTask(task: Task, id: Number): JQuery {
+    let div: JQuery = $("<div class='col-6' id=\"" + id + "\">");
+    let card: JQuery = $("<div class=\"card task\">");
+    let body: JQuery = $("<div id="+task.id +" class=\"card-body\">");
+
+    body.append($("<h5 class=\"card-title\">" + task.name + "</h5>"));
+    body.append(($("<p class=\"card-text\">" + task.description + "</p>")));
+    // edit button
+    body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\" onclick='modalcontent("+id+")' data-toggle=\"modal\" data-target=\"#edit\" > Edit</button>"));
+    // check icon
+    body.append($("<button type=\'button\' class='btn btn-secondary' onclick='setTaskDone(" + id + ")'> <i class=\"fa fa-check\"></i> </button>"));
+    // close button
+    body.append($("<button type=\'button\' class=\'close\' aria-label=\"close\" onclick='deleteTask(" + id.toLocaleString() + ")'> <span aria-hidden=\'true\'>&times;</span> </button>"));
+
+    card.append(body);
+    div.append(card);
+
+    return div;
+}
+
 /**********************************************************************************************************************
  * SECTION CATEGORY
  * FUNCTIONS GO HERE
@@ -115,17 +194,6 @@ function printCategory() {
     for (let item of categoryList) {
         console.log("Category#" + item.id + ", " + item.name + ", " + item.color);
     }
-}
-
-function renderList() {
-    let itemList: JQuery = $("#item-list");
-
-    itemList.empty();
-
-    for (let item of taskList) {
-        itemList.append(renderTask(item, item.id));
-    }
-
 }
 
 function renderCatList() {
@@ -187,74 +255,6 @@ function renderCategory(category: Category, id: Number): JQuery {
     body.append($("<button type=\'button\' class='btn btn-secondary' onclick='setTaskDone(" + id + ")'> <i class=\"fa fa-check\"></i> </button>"));
     // close button
     body.append($("<button type=\'button\' class=\'close\' aria-label=\"close\" onclick='deleteCategory(" + id.toLocaleString() + ")'> <span aria-hidden=\'true\'>&times;</span> </button>"));
-
-    card.append(body);
-    div.append(card);
-
-    return div;
-}
-
-/**
- * Function for deleting a task from the view list
- * @param id
- */
-function deleteTask(id: Number) {
-    let rmTask: Task;
-    taskList.forEach(function (task) {
-        if (task.id === id) rmTask = task;
-    })
-    const index = taskList.indexOf(rmTask, 0);
-    if(index > -1){
-        taskList.splice(index, 1);
-    }
-    let element = document.getElementById(id.toLocaleString());
-    element.parentNode.removeChild(element);
-    return false;
-
-}
-
-/**
- * Function to set a task done and change view
- * of the displayed task card
- * @param id
- */
-function setTaskDone(id: Number) {
-    taskList.forEach(function (task) {
-        if (task.id === id) task.status = true;
-    })
-    let element = document.getElementById(id.toLocaleString());
-    let card = element.children;
-    card[0].setAttribute("class",   "card task bg-success");
-
-    return false;
-}
-
-/*
-* Function to prepare the modal window with the current task
-* */
-
-function modalcontent(id:number) {
-
-    $('#edittask').val(taskList[id].name);
-    $('#editdescription').val(taskList[id].description)
-
-    tempId=id;
-}
-
-
-function renderTask(task: Task, id: Number): JQuery {
-    let div: JQuery = $("<div class='col-6' id=\"" + id + "\">");
-    let card: JQuery = $("<div class=\"card task\">");
-    let body: JQuery = $("<div id="+task.id +" class=\"card-body\">");
-
-    body.append($("<h5 class=\"card-title\">" + task.name + "</h5>"));
-    body.append(($("<p class=\"card-text\">" + task.description + "</p>")));
-    // edit button
-    body.append($("<button id =\"editTaskBtn\" class=\"btn btn-primary\" onclick='modalcontent("+id+")' data-toggle=\"modal\" data-target=\"#edit\" > Edit</button>"));
-    // check icon
-    body.append($("<button type=\'button\' class='btn btn-secondary' onclick='setTaskDone(" + id + ")'> <i class=\"fa fa-check\"></i> </button>"));
-    // close button
-    body.append($("<button type=\'button\' class=\'close\' aria-label=\"close\" onclick='deleteTask(" + id.toLocaleString() + ")'> <span aria-hidden=\'true\'>&times;</span> </button>"));
 
     card.append(body);
     div.append(card);
