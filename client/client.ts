@@ -3,7 +3,7 @@
  *********************************************************************************************************************/
 let taskList: Task[] = [];
 let categoryList: Category[] = [];
-enum priorityEnum {low, middle, high}
+enum priorityEnum { low = "LOW", middle = "MIDDLE", high = "HIGH" }
 let itemList: JQuery = $("#item-list");
 let tempId: number;
 
@@ -21,13 +21,13 @@ class Task {
     priority: priorityEnum;
     status: boolean;
 
-    constructor(id: number, name: string, description: string, category?: Category) {
+    constructor(id: number, name: string, description: string, priority: priorityEnum, category?: Category) {
         this.id = id;
         this.name = name;
         this.date = new Date();
         this.description = description;
         this.category = category;
-        this.priority = 1;      //middle priority
+        this.priority = priority;      //middle priority
         this.status = false;
     }
 }
@@ -42,17 +42,17 @@ function calcCurrentTaskId() {
     return id++
 }
 
-function createTask(name: string, description: string) {
+function createTask(name: string, description: string, priority: priorityEnum) {
     let categorySelect: JQuery = $("#categorySelect");
     if (name == "" && description == "") {
         console.log("Tasks without Name or Description are not allowed.");
     } else {
         if (+categorySelect.val() != -1) {
-            taskList.push(new Task(calcCurrentTaskId(), name, description, categoryList[+categorySelect.val()]));
-            console.log(taskList[taskList.length-1]);
+            taskList.push(new Task(calcCurrentTaskId(), name, description, priority, categoryList[+categorySelect.val()]));
+            console.log(taskList[taskList.length - 1]);
         } else {
-            taskList.push(new Task(calcCurrentTaskId(), name, description));
-            console.log(taskList[taskList.length-1]);
+            taskList.push(new Task(calcCurrentTaskId(), name, description, priority));
+            console.log(taskList[taskList.length - 1]);
         }
         renderList();
     }
@@ -145,10 +145,10 @@ function renderTask(task: Task, id: Number): JQuery {
     let body: JQuery = $("<div id=" + task.id + " class=\"card-body\">");
     let footer: JQuery;
 
-    if (task.category != undefined){
-        footer = $("<div class=\"card-footer\">" + "Category: " + task.category.name + "  </div>");
+    if (task.category != undefined) {
+        footer = $("<div class=\"card-footer\">" + "Category: " + task.category.name + " <br> Priority: " + task.priority + "  </div>");
     } else {
-        footer = $("<div class=\"card-footer\">" + "No category" + "  </div>");
+        footer = $("<div class=\"card-footer\">" + "No category <br> Priority: " + task.priority + "  </div>");
 
     }
 
@@ -279,15 +279,26 @@ function renderCategory(category: Category, id: Number): JQuery {
     return div;
 }
 
-function renderCategoryDropdown(){
+function renderCategoryDropdown() {
     let categorySelect: JQuery = $("#categorySelect");
     categorySelect.empty();
 
     categorySelect.append('<option value="-1">' + "No category" + '</option>');
 
-    for(let cat of categoryList){
+    for (let cat of categoryList) {
         categorySelect.append('<option value="' + cat.id + '">' + cat.name + '</option>')
     }
+}
+
+
+function renderPrioityDropdown() {
+    let prioritySelect: JQuery = $("#prioritySelect");
+    prioritySelect.empty();
+
+    prioritySelect.append('<option value= >' + priorityEnum.low + '</option>');
+    prioritySelect.append('<option value= >' + priorityEnum.middle + '</option>');
+    prioritySelect.append('<option value= >' + priorityEnum.high + '</option>');
+
 }
 
 /**********************************************************************************************************************
@@ -299,8 +310,17 @@ $(function () {
     $("#addTaskBtn").on("click", () => {
         let taskName: string = $("#task").val().toString().trim();
         let taskDescription: string = $("#description").val().toString().trim();
+        let selectedPriority = $("#prioritySelect :selected").text()
+        let priority: priorityEnum; 
+        if(selectedPriority == "LOW" || selectedPriority == "low"){
+            priority = priorityEnum.low;
+        }else if(selectedPriority == "MIDDLE" || selectedPriority == "middle"){
+            priority = priorityEnum.middle;
+        }else if(selectedPriority == "HIGH" || selectedPriority == "high"){
+            priority = priorityEnum.high;
+        }
         console.log(taskName);
-        createTask(taskName, taskDescription);
+        createTask(taskName, taskDescription, priority );
         printTask();
         event.preventDefault();
     });
@@ -339,16 +359,7 @@ $(function () {
         renderList();
     });
 
-});
+    renderCategoryDropdown();
+    renderPrioityDropdown();
 
-$(function () {
-    let categorySelect: JQuery = $("#categorySelect");
-
-    if (categoryList.length == 0){
-        categorySelect.append('<option value= "-1">' + "You have no categories saved" + '</option>')
-    } else {
-        for(let cat of categoryList){
-            categorySelect.append('<option value="' + cat.id + '">' + cat.name + '</option>')
-        }
-    }
 });
