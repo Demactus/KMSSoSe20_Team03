@@ -1,7 +1,7 @@
 /*********************************************************************************************************************
  *
  *********************************************************************************************************************/
-import get = Reflect.get;
+
 
 let taskList : Task[] = [];
 let categoryList : Category[] = [];
@@ -160,6 +160,20 @@ function saveCategory(id: number){
     }
 }
 
+function deleteCategory(id: number){
+    let rmCategory: Category;
+    categoryList.forEach(function (category) {
+        if (category.id === id) rmCategory = category;
+    })
+    const index = categoryList.indexOf(rmCategory, 0);
+    if(index > -1){
+        categoryList.splice(index, 1);
+    }
+    let element = document.getElementById(id.toLocaleString());
+    element.parentNode.removeChild(element);
+    return false;
+}
+
 function renderCategory(category: Category, id: Number): JQuery {
     let div: JQuery = $("<div class='col-6' id=\"" + id + "\">");
     let card: JQuery = $("<div class=\"card task\">");
@@ -172,7 +186,7 @@ function renderCategory(category: Category, id: Number): JQuery {
     // check icon
     body.append($("<button type=\'button\' class='btn btn-secondary' onclick='setTaskDone(" + id + ")'> <i class=\"fa fa-check\"></i> </button>"));
     // close button
-    body.append($("<button type=\'button\' class=\'close\' aria-label=\"close\" onclick='deleteTask(" + id.toLocaleString() + ")'> <span aria-hidden=\'true\'>&times;</span> </button>"));
+    body.append($("<button type=\'button\' class=\'close\' aria-label=\"close\" onclick='deleteCategory(" + id.toLocaleString() + ")'> <span aria-hidden=\'true\'>&times;</span> </button>"));
 
     card.append(body);
     div.append(card);
