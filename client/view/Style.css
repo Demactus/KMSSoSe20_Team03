@@ -112,6 +112,10 @@ input[type="text"] {
 .btn-secondary{
     background-color: #32cd32;
 }
+
+.btn-warning{
+    float: right;
+}
 #addCategoryBtn {
     margin-top: 20px;
 }

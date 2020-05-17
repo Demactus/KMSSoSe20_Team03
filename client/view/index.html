@@ -19,19 +19,31 @@
 <body>
     <div class="container">
         <h1 class="app-title">ToDo List </h1>
-        <div class="empty-state">
+        <!--<div class="empty-state">
             <svg class="checklist-icon">
                 <use href="#checklist-icon"></use>
             </svg>
             <h2 class="empty-state__title">Add your first todo</h2>
             <p class="empty-state__description">What do you want to get done today?</p>
-        </div>
+        </div>-->
+
         <div class="row">
             <div class="col-6">
                 <label>Task</label><input autofocus type="text" aria-label="Enter a new todo item"
                     placeholder="E.g. Go shopping" class="ts-todo-input" id="task">
                 <label>Description</label><input autofocus type="text" aria-label="Enter a new todo item"
                     placeholder="E.g. Some Text" class="ts-todo-input" id="description">
+                <div class="form-group">
+                    <label for="categorySelect">Choose category</label>
+                    <select class="custom-select" id="categorySelect">
+
+                    </select>
+
+                    <label for="prioritySelect">Choose priority</label>
+                    <select class="custom-select" id="prioritySelect">
+
+                    </select>
+                </div>
                 <button class="btn btn-primary" id="addTaskBtn">submit Task</button>
             </div>
 
@@ -45,7 +57,7 @@
 
         <div class="row">
             <div class="col">
-                <h2 class="card-header">Tasklist</h2>
+                <h2 class="card-header">Tasklist <button class="btn btn-warning" id="sortBtn">Sort</button></h2>
                 <div id="item-list" class="list-group">
 
                 </div>
@@ -57,9 +69,61 @@
 
                 </div>
             </div>
+            <!-- This is the modal window -->
+            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editLable"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editLable">Editing Window</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-6">
+                                <label>Task</label><input autofocus type="text" aria-label="Enter a new todo item"
+                                    class="ts-todo-input" id="edittask" value="">
+                                <label>Description</label><input autofocus type="text"
+                                    aria-label="Enter a new todo item" class="ts-todo-input" id="editdescription"
+                                    value="">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button id="editsavebtn" type="button" class="btn btn-primary" data-dismiss="modal">Save
+                                changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
         </div>
 
+        <!--Edit Modal Category-->
+        <div class="modal" tabindex="-1" role="dialog" id="editModalCategory">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Category #</h5>
+                        <h5 id="categoryIdModal">1</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input autofocus type="text" aria-label="Enter a new todo item" class="ts-todo-input"
+                            id="editModalCategoryInput">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="saveButtonCategory">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </div>
