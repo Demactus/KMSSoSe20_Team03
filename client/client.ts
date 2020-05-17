@@ -67,7 +67,7 @@ export function createTask(name: string, description: string, priority: priority
     }
 }
 
-export function helloTest() {
+export function dummyTest() {
     return true;
 }
 
