@@ -1,17 +1,16 @@
 import {
     calcCurrentTaskId,
-    createTask, dummyTest,
+    createTask, deleteTask, dummyTest,
     getTaskList,
-    priorityEnum,
-    setTaskDone,
+    priorityEnum, setPriority,
+    setTaskDone, Task,
     taskList
 } from '../client';
 import 'mocha';
 import 'jquery';
 import {expect} from 'chai';
-import set = Reflect.set;
-import * as assert from "assert";
 
+let priority: priorityEnum.low;
 
 // dummy test for better understanding
 describe('Dummy test', () => {
@@ -37,9 +36,8 @@ describe('Calculate current task id test', () => {
     });
 })
 
-describe('Create Task Test', () => {
+describe('Create task test', () => {
     let testList = taskList;
-    let priority: priorityEnum.low;
 
     it('should return true if task was successfully created', () => {
         createTask('testCreate', 'testTask', priority);
@@ -47,10 +45,25 @@ describe('Create Task Test', () => {
     });
 });
 
+describe('Set priority of task test', () => {
+    let testTask: Task;
+    it('should set the priority of a task by its given ID', function () {
+        testTask.priority = priority;
+        setPriority(3);
+        expect(testTask.priority).to.equal(priorityEnum.high)
+    });
+})
+
+describe('Delete a task test', () => {
+    let testList = taskList;
+    it('should delete a task from the task list', function () {
+        deleteTask(1);
+        expect(testList).to.not.have.lengthOf(0);
+    });
+})
 
 describe('Set task done test', () => {
     let testList = taskList;
-    let priority: priorityEnum.low;
     createTask('testSetDone', 'testTask', priority);
 
     it('should set the task with the given ID as done', function () {
