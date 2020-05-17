@@ -1,8 +1,10 @@
 import { createTask } from '../client';
 import { helloTest } from '../client';
-import { expect } from 'chai';
 import 'mocha';
 import 'jquery';
+import jsdom = require("jsdom");
+import { expect } from 'chai';
+
 
 
 describe('First test', () => {
