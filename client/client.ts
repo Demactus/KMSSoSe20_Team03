@@ -12,7 +12,7 @@ let tempId: number;
  * FUNCTIONS GO HERE
  *********************************************************************************************************************/
 
-class Task {
+export class Task {
     id: number;
     name: string;
     date: Date;
@@ -32,7 +32,7 @@ class Task {
     }
 }
 
-function calcCurrentTaskId() {
+export function calcCurrentTaskId() {
     let id: number;
     if (taskList.length <= 0) {
         id = 0;
@@ -42,7 +42,13 @@ function calcCurrentTaskId() {
     return id++
 }
 
-function createTask(name: string, description: string, priority: priorityEnum) {
+/**
+ * Function for creating a task object
+ * @param name
+ * @param description
+ * @param priority
+ */
+export function createTask(name: string, description: string, priority: priorityEnum) {
     let categorySelect: JQuery = $("#categorySelect");
     if (name == "" && description == "") {
         console.log("Tasks without Name or Description are not allowed.");
@@ -58,11 +64,15 @@ function createTask(name: string, description: string, priority: priorityEnum) {
     }
 }
 
+export function helloTest() {
+    return true;
+}
+
 /**
  * TODO: We should be able to change the priority of a specific task (by ID or something)
  * @param prio
  */
-function setPriority(prio: number) {
+export function setPriority(prio: number) {
     if (prio > 2 || prio < 0) {
         console.log("There's no such priority");
     } else {
@@ -73,8 +83,7 @@ function setPriority(prio: number) {
 /**
  * Print all Tasks
  */
-
-function printTask() {
+export function printTask() {
     for (let item of taskList) {
         console.log("task# " + item.id + ", " + item.name + ", " + item.description);
     }
@@ -84,7 +93,7 @@ function printTask() {
  * Function for deleting a task from the view list
  * @param id
  */
-function deleteTask(id: Number) {
+export function deleteTask(id: Number) {
     let rmTask: Task;
     taskList.forEach(function (task) {
         if (task.id === id) rmTask = task;
@@ -104,7 +113,7 @@ function deleteTask(id: Number) {
  * of the displayed task card
  * @param id
  */
-function setTaskDone(id: Number) {
+export function setTaskDone(id: Number) {
     taskList.forEach(function (task) {
         if (task.id === id) task.status = true;
     })
@@ -115,11 +124,10 @@ function setTaskDone(id: Number) {
     return false;
 }
 
-/*
+/**
 * Function to prepare the modal window with the current task
-* */
-
-function modalcontent(id: number) {
+*/
+export function modalcontent(id: number) {
 
     $('#edittask').val(taskList[id].name);
     $('#editdescription').val(taskList[id].description)
@@ -128,7 +136,7 @@ function modalcontent(id: number) {
 }
 
 
-function renderList() {
+export function renderList() {
     let itemList: JQuery = $("#item-list");
 
     itemList.empty();
@@ -139,7 +147,7 @@ function renderList() {
 
 }
 
-function renderTask(task: Task, id: Number): JQuery {
+export function renderTask(task: Task, id: Number): JQuery {
     let div: JQuery = $("<div class='col' id=\"" + id + "\">");
     let card: JQuery = $("<div class=\"card task\">");
     let body: JQuery = $("<div id=" + task.id + " class=\"card-body\">");
@@ -173,7 +181,7 @@ function renderTask(task: Task, id: Number): JQuery {
  * FUNCTIONS GO HERE
  *********************************************************************************************************************/
 
-class Category {
+export class Category {
     id: number;
     name: string;
     color: string;
@@ -185,7 +193,7 @@ class Category {
     }
 }
 
-function calcCurrentCatId() {
+export function calcCurrentCatId() {
     let id: number;
     if (categoryList.length <= 0) {
         id = 0;
@@ -195,7 +203,7 @@ function calcCurrentCatId() {
     return id++
 }
 
-function createCategory(name: string, color?: string) {
+export function createCategory(name: string, color?: string) {
     if (name == "") {
         console.log("Category without Name are not allowed.");
     } else {
@@ -205,13 +213,13 @@ function createCategory(name: string, color?: string) {
 
 }
 
-function printCategory() {
+export function printCategory() {
     for (let item of categoryList) {
         console.log("Category#" + item.id + ", " + item.name + ", " + item.color);
     }
 }
 
-function renderCatList() {
+export function renderCatList() {
     let itemList: JQuery = $("#category-list");
 
     itemList.empty();
@@ -224,7 +232,7 @@ function renderCatList() {
 
 let selectedCategory: number = 0;
 
-function editCategory(id: number) {
+export function editCategory(id: number) {
 
     for (let item of categoryList) {
         if (item.id == id) {
@@ -235,7 +243,7 @@ function editCategory(id: number) {
     }
 }
 
-function saveCategory(id: number) {
+export function saveCategory(id: number) {
     for (let item of categoryList) {
         if (item.id == id) {
             item.name = $("#editModalCategoryInput").val().toString().trim();
@@ -245,7 +253,7 @@ function saveCategory(id: number) {
     }
 }
 
-function deleteCategory(id: number) {
+export function deleteCategory(id: number) {
     let rmCategory: Category;
     categoryList.forEach(function (category) {
         if (category.id === id) rmCategory = category;
@@ -259,7 +267,7 @@ function deleteCategory(id: number) {
     return false;
 }
 
-function renderCategory(category: Category, id: Number): JQuery {
+export function renderCategory(category: Category, id: Number): JQuery {
     let div: JQuery = $("<div class='col' id=\"" + id + "\">");
     let card: JQuery = $("<div class=\"card task\">");
     let body: JQuery = $("<div class=\"card-body\">");
@@ -279,7 +287,7 @@ function renderCategory(category: Category, id: Number): JQuery {
     return div;
 }
 
-function renderCategoryDropdown() {
+export function renderCategoryDropdown() {
     let categorySelect: JQuery = $("#categorySelect");
     categorySelect.empty();
 
@@ -291,7 +299,7 @@ function renderCategoryDropdown() {
 }
 
 
-function renderPrioityDropdown() {
+export function renderPrioityDropdown() {
     let prioritySelect: JQuery = $("#prioritySelect");
     prioritySelect.empty();
 
