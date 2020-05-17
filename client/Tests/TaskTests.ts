@@ -1,16 +1,16 @@
-import { createTask } from '../client';
-import { helloTest } from '../client';
+import {createTask, getTaskList, priorityEnum, taskList} from '../client';
 import 'mocha';
 import 'jquery';
-import jsdom = require("jsdom");
-import { expect } from 'chai';
+import {expect} from 'chai';
 
 
+describe('Create Task Test', () => {
+    let testList = taskList;
+    let priority: priorityEnum.low;
 
-describe('First test', () => {
-    it('should return true', () => {
-        const result = helloTest();
-        expect(result).to.equal(true);
+    it('should return true if task was successfully created', () => {
+        createTask('test', 'testTask', priority);
+        expect(getTaskList().length).to.not.equal(testList);
     });
 });
 

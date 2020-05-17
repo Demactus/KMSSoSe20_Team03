@@ -1,9 +1,9 @@
 /*********************************************************************************************************************
  *
  *********************************************************************************************************************/
-let taskList: Task[] = [];
+export let taskList: Task[] = [];
 let categoryList: Category[] = [];
-enum priorityEnum { low = "LOW", middle = "MIDDLE", high = "HIGH" }
+export enum priorityEnum { low = "LOW", middle = "MIDDLE", high = "HIGH" }
 let itemList: JQuery = $("#item-list");
 let tempId: number;
 
@@ -30,6 +30,9 @@ export class Task {
         this.priority = priority;      //middle priority
         this.status = false;
     }
+}
+export function getTaskList() {
+    return taskList;
 }
 
 export function calcCurrentTaskId() {
