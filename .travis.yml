@@ -1,0 +1,33 @@
+language: nodejs
+
+before_script:
+  - npm run setup
+  - npm run build
+
+script:
+  - npm run test-only
+
+after_success:
+  - npm run typedoc
+  - npm pack
+
+deploy:
+  - provider: pages
+    skip_cleanup: true
+    local_dir: docs/
+    github_token: 2a7a9fec93972abe9723f2857af46f8ca26b1d8e
+    on:
+      tags: true
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    file_glob: true
+    file: "kmssose20_team03-*.tgz"
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: npm
+    skip_cleanup: true
+    email: "jan.niklas.martens@mni.thm.de"
+    api_key: 260e7863-c5ad-4119-9eb8-e56fb945d24a
+    on:
+      tags: true
