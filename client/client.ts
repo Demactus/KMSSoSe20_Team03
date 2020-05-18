@@ -4,8 +4,14 @@
 export let taskList: Task[] = [];
 let categoryList: Category[] = [];
 export enum priorityEnum { low = "LOW", middle = "MIDDLE", high = "HIGH" }
-let itemList: JQuery = $("#item-list");
+//let itemList: JQuery = $("#item-list");
 let tempId: number;
+
+const { JSDOM } = require('jsdom');
+const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
+const { window } = jsdom;
+// @ts-ignore
+const $ = global.jQuery = require('jquery')(window);
 
 /**********************************************************************************************************************
  * SECTION TASK
