@@ -44,7 +44,7 @@ describe('Create task test', () => {
         expect(getTaskList().length).to.not.equal(testList);
     });
 });
-
+/*
 describe('Set priority of task test', () => {
     let testTask: Task;
     it('should set the priority of a task by its given ID', function () {
@@ -70,4 +70,5 @@ describe('Set task done test', () => {
         const isTaskDone = setTaskDone(1);
         expect(isTaskDone).to.be.true;
     });
-});
+
+});*/
