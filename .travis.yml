@@ -1,4 +1,6 @@
-language: nodejs
+language: node_js
+node_js:
+  - "14.1.0"
 
 before_script:
   - npm run setup
