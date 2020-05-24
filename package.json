@@ -5,7 +5,7 @@
   "main": "index.js",
   "types": "index.d.js",
   "scripts": {
-    "setup": "npm install",
+    "setup": "npm install --build-from-resource",
     "build": "tsc",
     "build-watch": "tsc --watch",
     "test-only": "mocha client/Tests",
@@ -24,7 +24,7 @@
   "dependencies": {
     "@types/jquery": "^3.3.37",
     "@types/popper.js": "^1.11.0",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^4.5.0",
     "mocha-jsdom": "^2.0.0",
     "popper.js": "^1.16.1",
     "typescript": "^3.9.2"
