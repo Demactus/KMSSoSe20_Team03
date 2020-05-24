@@ -32,7 +32,7 @@ describe('Get task list test', () => {
 describe('Calculate current task id test', () => {
     let testList = taskList;
     it('should return correct current task id', function () {
-        expect(calcCurrentTaskId()).to.equal(1);
+        expect(calcCurrentTaskId()).to.equal(0);
     });
 })
 
