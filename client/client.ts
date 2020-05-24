@@ -9,7 +9,7 @@ let tempId: number;
 
 const { JSDOM } = require('jsdom');
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
-const { window } = jsdom;
+const {window} = jsdom;
 // @ts-ignore
 const $ = global.jQuery = require('jquery')(window);
 
@@ -17,6 +17,13 @@ const $ = global.jQuery = require('jquery')(window);
  * SECTION TASK
  * FUNCTIONS GO HERE
  *********************************************************************************************************************/
+
+
+
+let test = 0.2;
+
+
+let unordered;
 
 export class Task {
     id: number;
