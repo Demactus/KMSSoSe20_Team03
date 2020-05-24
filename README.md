@@ -1,3 +1,5 @@
+### Status
+[![Build Status](https://travis-ci.com/Demactus/KMSSoSe20_Team03.svg?branch=dev)](https://travis-ci.com/Demactus/KMSSoSe20_Team03)
 # KMSSoSe20_Team03
 ## How to Start
 Start with 
