@@ -1,9 +1,11 @@
 import {
     calcCurrentTaskId,
-    createTask, deleteTask, dummyTest,
+    createTask,
+    deleteTask,
+    dummyTest,
     getTaskList,
-    priorityEnum, setPriority,
-    setTaskDone, Task,
+    priorityEnum,
+    setTaskDone,
     taskList
 } from '../client';
 import 'mocha';
@@ -45,17 +47,10 @@ describe('Create task test', () => {
     });
 });
 
-describe('Set priority of task test', () => {
-    let testTask: Task;
-    it('should set the priority of a task by its given ID', function () {
-        testTask.priority = priority;
-        setPriority(3);
-        expect(testTask.priority).to.equal(priorityEnum.high)
-    });
-})
 
 describe('Delete a task test', () => {
     let testList = taskList;
+
     it('should delete a task from the task list', function () {
         deleteTask(1);
         expect(testList).to.not.have.lengthOf(0);
