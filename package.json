@@ -4,7 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register client/Tests/TaskTests.ts"
+    "setup": "npm install",
+    "build": "tsc",
+    "build-watch": "tsc --watch",
+    "test-only": "mocha client/Tests",
+    "pretest": "npm run build",
+    "test": "mocha -r ts-node/register client/Tests/TaskTests.ts",
+    "clean": "shx rm -rf node_modules/ dist/ docs/",
+    "typedoc": "typedoc --out ./docs --mode modules --tsconfig ./tsconfig.json ./client",
+    "posttypedoc": "shx cp .nojekyll docs/.nojekyll"
   },
   "repository": {
     "type": "git",
