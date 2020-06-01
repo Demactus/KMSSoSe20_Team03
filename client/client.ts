@@ -7,11 +7,13 @@ export enum priorityEnum { low = "LOW", middle = "MIDDLE", high = "HIGH" }
 //let itemList: JQuery = $("#item-list");
 let tempId: number;
 
-const { JSDOM } = require('jsdom');
-const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
-const { window } = jsdom;
-// @ts-ignore
-const $ = global.jQuery = require('jquery')(window);
+
+ const { JSDOM } = require('jsdom');
+ const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
+ const { window } = jsdom;
+ // @ts-ignore
+ const $ = global.jQuery = require('jquery')(window);
+
 
 /**********************************************************************************************************************
  * SECTION TASK
@@ -77,17 +79,7 @@ export function dummyTest() {
     return true;
 }
 
-/**
- * TODO: We should be able to change the priority of a specific task (by ID or something)
- * @param prio
- */
-export function setPriority(prio: number) {
-    if (prio > 2 || prio < 0) {
-        console.log("There's no such priority");
-    } else {
-        this.priority = prio;
-    }
-}
+
 
 /**
  * Print all Tasks
@@ -111,8 +103,7 @@ export function deleteTask(id: Number) {
     if (index > -1) {
         taskList.splice(index, 1);
     }
-    let element = document.getElementById(id.toLocaleString());
-    element.parentNode.removeChild(element);
+    renderList();
     return false;
 
 }
@@ -123,14 +114,13 @@ export function deleteTask(id: Number) {
  * @param id
  */
 export function setTaskDone(id: Number) {
+    let testTask: Task ;
     taskList.forEach(function (task) {
         if (task.id === id) task.status = true;
+        testTask = task;
     })
-    let element = document.getElementById(id.toLocaleString());
-    let card = element.children;
-    card[0].setAttribute("class", "card task bg-success");
-
-    return false;
+    renderList();
+    return testTask;
 }
 
 /**
@@ -138,6 +128,7 @@ export function setTaskDone(id: Number) {
 */
 export function modalcontent(id: number) {
 
+    console.log(getTaskList());
     $('#edittask').val(taskList[id].name);
     $('#editdescription').val(taskList[id].description)
 
@@ -158,7 +149,12 @@ export function renderList() {
 
 export function renderTask(task: Task, id: Number): JQuery {
     let div: JQuery = $("<div class='col' id=\"" + id + "\">");
-    let card: JQuery = $("<div class=\"card task\">");
+    let card: JQuery;
+    if (task.status == true) {
+        card = $("<div class=\"card task bg-success\">");
+    } else {
+        card = $("<div class=\"card task\">");
+    }
     let body: JQuery = $("<div id=" + task.id + " class=\"card-body\">");
     let footer: JQuery;
 

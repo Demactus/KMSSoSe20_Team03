@@ -27,7 +27,7 @@
     "out": "docs"
   },
   "exclude": [
-    "node_modules",
+    "./node_modules",
     "platforms"
   ]
 }

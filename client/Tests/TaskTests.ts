@@ -1,8 +1,10 @@
 import {
     calcCurrentTaskId,
-    createTask, deleteTask, dummyTest,
+    createTask,
+    deleteTask,
+    dummyTest,
     getTaskList,
-    priorityEnum, setPriority,
+    priorityEnum,
     setTaskDone, Task,
     taskList
 } from '../client';
@@ -32,7 +34,7 @@ describe('Get task list test', () => {
 describe('Calculate current task id test', () => {
     let testList = taskList;
     it('should return correct current task id', function () {
-        expect(calcCurrentTaskId()).to.equal(0);
+        expect(calcCurrentTaskId()).to.equal(1);
     });
 })
 
@@ -45,17 +47,10 @@ describe('Create task test', () => {
     });
 });
 
-describe('Set priority of task test', () => {
-    let testTask: Task;
-    it('should set the priority of a task by its given ID', function () {
-        testTask.priority = priority;
-        setPriority(3);
-        expect(testTask.priority).to.equal(priorityEnum.high)
-    });
-})
 
 describe('Delete a task test', () => {
     let testList = taskList;
+
     it('should delete a task from the task list', function () {
         deleteTask(1);
         expect(testList).to.not.have.lengthOf(0);
@@ -67,8 +62,7 @@ describe('Set task done test', () => {
     createTask('testSetDone', 'testTask', priority);
 
     it('should set the task with the given ID as done', function () {
-        const isTaskDone = setTaskDone(1);
-        expect(isTaskDone).to.be.true;
+        let isTaskDone: Task = setTaskDone(0);
+        expect(isTaskDone.status).to.be.true;
     });
-
 });
