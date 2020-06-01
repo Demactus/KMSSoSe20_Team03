@@ -117,10 +117,7 @@ export function setTaskDone(id: Number) {
     taskList.forEach(function (task) {
         if (task.id === id) task.status = true;
     })
-    let element = document.getElementById(id.toLocaleString());
-    let card = element.children;
-    card[0].setAttribute("class", "card task bg-success");
-
+    renderList();
     return false;
 }
 
@@ -150,7 +147,12 @@ export function renderList() {
 
 export function renderTask(task: Task, id: Number): JQuery {
     let div: JQuery = $("<div class='col' id=\"" + id + "\">");
-    let card: JQuery = $("<div class=\"card task\">");
+    let card: JQuery;
+    if (task.status == true) {
+        card = $("<div class=\"card task bg-success\">");
+    } else {
+        card = $("<div class=\"card task\">");
+    }
     let body: JQuery = $("<div id=" + task.id + " class=\"card-body\">");
     let footer: JQuery;
 
