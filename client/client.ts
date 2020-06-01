@@ -2,7 +2,7 @@
  *
  *********************************************************************************************************************/
 export let taskList: Task[] = [];
-let categoryList: Category[] = [];
+export let categoryList: Category[] = [];
 export enum priorityEnum { low = "LOW", middle = "MIDDLE", high = "HIGH" }
 //let itemList: JQuery = $("#item-list");
 let tempId: number;
