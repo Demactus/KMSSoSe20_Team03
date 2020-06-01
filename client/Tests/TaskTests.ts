@@ -5,7 +5,7 @@ import {
     dummyTest,
     getTaskList,
     priorityEnum,
-    setTaskDone,
+    setTaskDone, Task,
     taskList
 } from '../client';
 import 'mocha';
@@ -58,11 +58,10 @@ describe('Delete a task test', () => {
 })
 
 describe('Set task done test', () => {
-    let testList = taskList;
     createTask('testSetDone', 'testTask', priority);
 
     it('should set the task with the given ID as done', function () {
-        const isTaskDone = setTaskDone(1);
-        expect(isTaskDone).to.be.true;
+        let isTaskDone: Task = setTaskDone(0);
+        expect(isTaskDone.status).to.be.true;
     });
 });

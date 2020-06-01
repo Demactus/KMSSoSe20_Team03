@@ -114,11 +114,13 @@ export function deleteTask(id: Number) {
  * @param id
  */
 export function setTaskDone(id: Number) {
+    let testTask: Task ;
     taskList.forEach(function (task) {
         if (task.id === id) task.status = true;
+        testTask = task;
     })
     renderList();
-    return false;
+    return testTask;
 }
 
 /**
