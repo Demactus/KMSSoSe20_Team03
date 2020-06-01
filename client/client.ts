@@ -138,6 +138,7 @@ export function setTaskDone(id: Number) {
 */
 export function modalcontent(id: number) {
 
+    console.log(getTaskList());
     $('#edittask').val(taskList[id].name);
     $('#editdescription').val(taskList[id].description)
 
